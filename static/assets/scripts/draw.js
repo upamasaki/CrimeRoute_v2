@@ -48,6 +48,8 @@ window.onload = function()
 document.getElementById( "wall" ).onclick = function( event ) {
 	var clickX = event.pageX ;
 	var clickY = event.pageY ;
+  console.log(clickX);
+  console.log(clickY);
 
 	// 要素の位置を取得
 	var clientRect = this.getBoundingClientRect() ;
@@ -62,11 +64,11 @@ document.getElementById( "wall" ).onclick = function( event ) {
   console.log(y);
 
   // get canvas info
-  var canvas = document.getElementById ("wall")
-  var ctx = canvas.getContext('2d')
+  var canvas = document.getElementById ("wall");
+  var ctx = canvas.getContext('2d');
 
   // draw rect
-  ctx.strokeRect (x ,y , 100, 100)
+  ctx.strokeRect (x ,y , 100, 100);
 
   
   
