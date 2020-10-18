@@ -40,7 +40,7 @@ print("# 参照パス一覧")
 pprint(sys.path)
 print("##############################################")
 message = {}
-message['page_title'] = 'item-list'
+message['page_title_key'] = 'item-list'
 message['target_item_key'] = ''
 
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
@@ -122,8 +122,38 @@ def index():
   message['firebase_get'] = result_dict
   print("##############################################")
 
-  message['page_title'] = 'item-list'
+  message['page_title_key'] = 'index'
   return render_template('index.html', message=message)
+
+
+
+
+###############################################################################
+#
+# ----- ルート投稿関係のページ ---------------------------------------
+#
+# +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+# │
+# │ ルート投稿ページです
+# │                              @author masaki tani 2020.10.18
+# +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+@app.route('/route_post', methods=['GET'])
+def route_post():
+
+  print("##############################################")
+  print("# 登録商品一覧")
+
+  ##############################################
+  # postgres database ver
+  #
+  result = psql.select_all()
+  result_dict = psql.result_list2dict(result)
+  pprint(result_dict)
+  message['firebase_get'] = result_dict
+  print("##############################################")
+
+  message['page_title_key'] = 'route_post'
+  return render_template('route_post.html', message=message)
 
 
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
@@ -385,7 +415,7 @@ def DraftsPage():
 def page_not_found(e):
     # note that we set the 404 status explicitly
     message['page_title'] = '404'
-    return render_template('404.html', message=message), 404
+    return render_template('index.html', message=message), 404
 
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 # │
@@ -540,7 +570,7 @@ def allwed_file(filename):
 
 if __name__ == '__main__':
 
-  app.run(host='0.0.0.0', port=5000, debug=True)
+  app.run(host='0.0.0.0', port=5001, debug=True)
 
   ##############################################
   # +++++++++++++++++++++++++++++++++++++++++++

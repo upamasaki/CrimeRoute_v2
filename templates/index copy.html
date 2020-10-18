@@ -1,0 +1,81 @@
+<!-- メニューとかを引っ張ってくるよ．ここに代入するイメージじゃなくて，Layout.htmlをベースにするイメージだね． -->
+{% extends "layout.html" %}
+
+
+{% block body %}
+<div class="content">
+  <div class="row">
+
+    {% for i in message['firebase_get'] %}
+    
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <form action="/ItemCMD" method="POST" enctype = multipart/form-data>
+            <div class="card-body ">
+              <!--
+              ＋─＋─＋─＋─＋─＋─＋─＋─＋─＋─＋─＋─＋─＋─＋─
+              i の中には主キーが入っています．
+              ex. 'jqqixr5fk6gfwajtwsjn'
+              これで商品情報の受け渡しをおこないます．
+
+              # =========================================
+              message['firebase_get'][i]の中身です．
+              # ---------------------------------------------------
+              {'jqqixr5fk6gfwajtwsjn': {'item_delivery_candidate_date01': '2020-06-06',
+                              'item_delivery_candidate_date02': '2020-06-06',
+                              'item_delivery_candidate_date03': '2020-06-06',
+                              'item_img_url': 'https://res.cloudinary.com/aichi-prefectural-university/image/upload/v1591363750/jqqixr5fk6gfwajtwsjn.png',
+                              'item_name': 'rabbit_handkerchief',
+                              'item_period1': '2020-06-05',
+                              'item_period2': '2020-06-05',
+                              'item_price': '0',
+                              'item_usage': 'Its a rabbit handkerchief.',
+                              'public_id': 'jqqixr5fk6gfwajtwsjn',
+                              'regist_day': '2020-06-05',
+                              'user_name': 'tani'}}
+                                                              @author masaki tani 2020.06.05
+              ＋─＋─＋─＋─＋─＋─＋─＋─＋─＋─＋─＋─＋─＋─＋─
+              -->
+              <div style="background-color:rgba(255,255,255,0.25);">
+                <button type="submit" 
+                        class="btn" 
+                        value="item_detail_id_{{message['firebase_get'][i]['public_id']}}" 
+                        name='item_cmd' 
+                        style="padding-top: 2px;padding-left: 5px;padding-right: 5px;padding-bottom: 1px;font-size: 19px;background-color:rgba(255,255,255,0.25);width:100%;justify-content: center;align-items: center;">
+                  <p style="color:#34b5b8;">{{message['firebase_get'][i]['item_name']}}</p>
+                </button>
+              </div>
+              
+              <hr>
+              {% if 'item_img_url' in message['firebase_get'][i] %}
+              <img  class=" lazyloaded" alt="Item Image" src="{{message['firebase_get'][i]['item_img_url']}}">
+              {% else %}
+              <img  class=" lazyloaded" alt="Not Image" src="https://res.cloudinary.com/aichi-prefectural-university/image/upload/v1585403152/not_Image_r2xuqj.png">
+              {% endif %}
+            </div>
+            <div class="card-footer ">
+              <hr>
+              <div class="stats">
+                {{message['firebase_get'][i]['item_usage']}}
+              </div>
+              <hr>
+              <div class="stats">
+                {{message['firebase_get'][i]['user_name']}}さんからの出品
+                <button type="submit" class="btn btn-primary " value="item_delete_id_{{message['firebase_get'][i]['public_id']}}" name='item_cmd' style="padding-top: 5px;padding-left: 5px;padding-right: 5px;padding-bottom: 5px;font-size: 19px;">
+                  <i class="nc-icon nc-box"></i>削除
+                </button>
+              </div>
+              
+              
+              
+            </div>
+          </form>
+        </div>
+      </div>
+
+    {% endfor %}
+
+  </div>
+
+</div>
+{% endblock %}
