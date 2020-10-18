@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-user">
+        <div class="card-header">
+          <h5 class="card-title">{{ message["target_item_info"]["item_name"] }}</h5>
+          <hr>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-5">
+              <img  class=" lazyloaded" alt="Item Image" src="{{ message['target_item_info']['item_img_url'] }}">
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <label for="exampleInputEmail1">出品者</label>
+                <input type="text" 
+                        class="form-control" 
+                        placeholder="Email" 
+                        name="public_id" 
+                        value={{ message["target_item_info"]["user_name"] }} 
+                        disabled="disabled" >
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">値段</label>
+                <input type="text" 
+                        class="form-control" 
+                        placeholder="Email" 
+                        name="public_id" 
+                        value={{ message["target_item_info"]["item_price"] }} 
+                        disabled="disabled" >
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">値段</label>
+                <input type="text" 
+                        class="form-control" 
+                        placeholder="Email" 
+                        name="public_id" 
+                        value={{ message["target_item_info"]["item_price"] }} 
+                        disabled="disabled" >
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">カテゴリ1</label>
+                <input type="text" 
+                        class="form-control" 
+                        placeholder="Email" 
+                        name="public_id" 
+                        value={{ message["target_item_info"]["category1"] }} 
+                        disabled="disabled" >
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">カテゴリ2</label>
+                <input type="text" 
+                        class="form-control" 
+                        placeholder="Email" 
+                        name="public_id" 
+                        value={{ message["target_item_info"]["category2"] }} 
+                        disabled="disabled" >
+              </div>
+              <form action="/RentPage" method="POST" enctype = multipart/form-data>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">識別コード</label>
+                  <input type="text" class="form-control" placeholder="Email" name="public_id" value={{ message['target_item_info']["public_id"] }} disabled="disabled" >
+                </div>
+      
+                <div class="update ml-auto mr-auto">
+                  <button type="submit" class="btn btn-primary btn-round" value = Upload>この物品を借りる</button>
+                </div>
+              </form>
+            </div>
+            </div>
+          </div>
+          <!-- IMAGE -->
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

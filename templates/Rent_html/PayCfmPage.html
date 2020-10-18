@@ -1,0 +1,126 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card card-user">
+        <div class="card-header">
+          <h5 class="card-title">支払い方法の確認</h5>
+        </div>
+        <div class="card-body">
+          サンプルページ
+          <form action="/PayCfmPageResult" method="POST" enctype = multipart/form-data>
+            <!--
+            <div class="row">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>投稿者名</label>
+                  <input type="text" class="form-control" placeholder="Username" value="tani" name="user_name">
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">貸出物の名前</label>
+                  <input type="text" class="form-control" placeholder="Email" name="item_name" value="rabbit_handkerchief">
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>貸出物の説明(大きさ，状態など)</label>
+                  <textarea class="form-control textarea" name="item_usage">Its a rabbit handkerchief.</textarea>
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>値段</label>
+                  <input type="number" name="item_price" class="form-control textarea">
+                </div>
+              </div>
+
+              
+              <div class="col-md-10">
+                <div class="form-group">
+                  <br>
+                </div>
+              </div>
+
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>貸出可能開始日</label>
+                  <input type="date" name="item_period1" max="9999-12-31" class="form-control textarea">
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>貸出可能終了日</label>
+                  <input type="date" name="item_period2" max="9999-12-31" class="form-control textarea">
+                </div>
+              </div>
+
+
+              <div class="col-md-10">
+                <div class="form-group">
+                  <br>
+                </div>
+              </div>
+
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label> 受け渡し方法<br><font color="#dc3545">*現在コロナウイルス対策のため宅配のみの受け渡しとなっています．</font></label>
+                  <select class="form-control textarea MySelect" id="item_delivery_method">
+                    <option selected value="delivery_method_no_selected"> 受け渡し方法を選択してください</option>
+                    <option value="delivery">宅配</option>
+
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>受け渡し候補日(第1希望)</label>
+                  <input type="date" name="item_delivery_candidate_date01" max="9999-12-31" class="form-control textarea">
+                </div>
+              </div>
+
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>受け渡し候補日(第2希望)</label>
+                  <input type="date" name="item_delivery_candidate_date02" max="9999-12-31" class="form-control textarea">
+                </div>
+              </div>
+
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>受け渡し候補日(第3希望)</label>
+                  <input type="date" name="item_delivery_candidate_date03" max="9999-12-31" class="form-control textarea">
+                </div>
+              </div>
+
+              <div class="col-md-10">
+                <div class="form-group">
+                  貸出物の写真【アップロード】
+                  <input type=file name = file>
+                </div>
+              </div>
+            </div>
+           
+
+            -->
+            <div class="row">
+              <div class="update ml-auto mr-auto">
+                <button type="submit" class="btn btn-primary btn-round" value = Upload>確認</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>
+      
+{% endblock %}

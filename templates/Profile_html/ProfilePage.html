@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="content">
+  <div class="row">
+
+    <div class="col-md-4">
+      <form class="myForm2" action="/OwnItemPage" method="POST" enctype = multipart/form-data>
+        <button type="submit" class="card-btn">
+              <div class="container">
+                投稿した商品
+              </div>
+        </button>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <form class="myForm2" action="/DraftsPage" method="POST" enctype = multipart/form-data>
+        <button type="submit" class="card-btn">
+              <div class="container">
+                下書き
+              </div>
+        </button>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <form class="myForm2" action="/PointPage" method="POST" enctype = multipart/form-data>
+        <button type="submit" class="card-btn">
+              <div class="container">
+                ポイント
+              </div>
+        </button>
+      </form>
+    </div>
+    <div class="col-md-12">
+      <div class="card card-user">
+        <div class="card-header">
+          <h5 class="card-title">プロフィール</h5>
+        </div>
+        <div class="card-body">
+          サンプルページ
+          <br><br><br><br><br><br><br><br><br><br>
+          <form action="/ProfilePage" method="POST" enctype = multipart/form-data>
+            <div class="row">
+              <div class="update ml-auto mr-auto">
+                <button type="submit" class="btn btn-primary btn-round" value = Upload>保存</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>
+      
+{% endblock %}

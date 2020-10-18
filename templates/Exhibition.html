@@ -1,0 +1,221 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<script type="text/javascript">
+  //今日の日時を表示
+      window.onload = function () {
+        //今日の日時を表示
+        today("item_period1");
+        today("item_period2");
+        today("regist_day");
+
+        //明日の日時を表示
+        tomorrow("item_delivery_candidate_date01");
+        tomorrow("item_delivery_candidate_date02");
+        tomorrow("item_delivery_candidate_date03");
+      }
+</script>
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card card-user">
+        <div class="card-header">
+          <h5 class="card-title">貸出物品投稿フォーム</h5>
+        </div>
+        <div class="card-body">
+          <form action="/login_manager" method="POST" enctype = multipart/form-data>
+            <div class="row">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>投稿者名</label>
+                  {% if message["essential_list_FLAG"]["user_name"]==0 %}
+                    <font color="#dc3545">*必須項目です．</font>
+                  {% endif %}
+                  <input type="text" class="form-control" placeholder="Username" value="tani" name="user_name">
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>登録日</label>               
+                  <input type="date" name="regist_day" max="9999-12-31" class="form-control textarea" id="regist_day" readonly>
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">貸出物の名前</label>
+                  {% if message["essential_list_FLAG"]["item_name"]==0 %}
+                    <font color="#dc3545">*必須項目です．</font>
+                  {% endif %}
+                  <input type="text" class="form-control" placeholder="Email" name="item_name" value="rabbit_handkerchief">
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>貸出物の説明(大きさ，状態など)</label>
+                  {% if message["essential_list_FLAG"]["item_usage"]==0 %}
+                    <font color="#dc3545">*必須項目です．</font>
+                  {% endif %}
+                  <textarea class="form-control textarea" name="item_usage">Its a rabbit handkerchief.</textarea>
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label> カテゴリ1</label><br>
+                  <select class="form-control textarea MySelect" id="category1" name="category1" >
+                    <option selected value="note">講習ノート</option>
+                    <option value="training_equipment">実習用具</option>
+                    <option value="reference_book">資格参考書</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label> カテゴリ2</label><br>
+                  <select class="form-control textarea MySelect" id="category2" name="category2" >
+                    <option selected value="empty"></option>
+                    <option value="informatics">情報学部</option>
+                    <option value="literature">文学部</option>
+                    <option value="science">理学部</option>
+                    <option value="engineering">工学部</option>
+                    <option value="economics">経済学部</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>値段</label>
+                  {% if message["essential_list_FLAG"]["item_price"]==0 %}
+                    <font color="#dc3545">*必須項目です．</font>
+                  {% endif %}
+                  <input type="number" name="item_price" class="form-control textarea" value="0">
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label> 貸出プラン</label><br>
+                  <select class="form-control textarea MySelect" id="rent_type" name="rent_type" >
+                    <option selected value="month">月</option>
+                    <option value="week">週</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>配送元地域</label>
+                  <select class="form-control textarea MySelect" id="delivery_city" name="delivery_city" >
+                    <option selected value="aichi">愛知県</option>
+                    <option value="sizuoka">静岡</option>
+                    <option value="mie">三重</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <br>
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>貸出可能開始日</label>
+                  {% if message["essential_list_FLAG"]["item_period1"]==0 %}
+                    <font color="#dc3545">*必須項目です．</font>
+                  {% endif %}
+                  <input type="date" name="item_period1" max="9999-12-31" class="form-control textarea" id="item_period1">
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>貸出可能終了日</label>
+                  {% if message["essential_list_FLAG"]["item_period2"]==0 %}
+                    <font color="#dc3545">*必須項目です．</font>
+                  {% endif %}
+                  
+                  <input type="date" name="item_period2" max="9999-12-31" class="form-control textarea" id="item_period2">
+                </div>
+              </div>
+
+
+              <div class="col-md-10">
+                <div class="form-group">
+                  <br>
+                </div>
+              </div>
+
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label> 受け渡し方法<br><font color="#51cbce">*現在コロナウイルス対策のため宅配のみの受け渡しとなっています．</font></label><br>
+                  {% if message["essential_list_FLAG"]["item_delivery_method"]==0 %}
+                    <font color="#dc3545">*必須項目です．</font>
+                  {% endif %}
+                  <select class="form-control textarea MySelect" id="item_delivery_method" name="item_delivery_method" >
+                    <option selected value="delivery"> 宅配</option>
+                    <!--
+                    <option selected value="delivery_method_no_selected"> 受け渡し方法を選択してください</option>
+                    <option value="hand_over_on_campus">手渡し(キャンパス内)</option>
+                    <option value="hand_over_outside_campus">手渡し(キャンパス外)</option>
+                    -->
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>受け渡し候補日(第1希望)</label>
+                  {% if message["essential_list_FLAG"]["item_delivery_candidate_date01"]==0 %}
+                  <font color="#dc3545">*必須項目です．</font>
+                  {% endif %} 
+                  <input type="date" name="item_delivery_candidate_date01" max="9999-12-31" class="form-control textarea" id="item_delivery_candidate_date01">
+                </div>
+              </div>
+
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>受け渡し候補日(第2希望)</label>
+                  {% if message["essential_list_FLAG"]["item_delivery_candidate_date02"]==0 %}
+                  <font color="#dc3545">*必須項目です．</font>
+                  {% endif %} 
+                  <input type="date" name="item_delivery_candidate_date02" max="9999-12-31" class="form-control textarea" id="item_delivery_candidate_date02">
+                </div>
+              </div>
+
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>受け渡し候補日(第3希望)</label>
+                  {% if message["essential_list_FLAG"]["item_delivery_candidate_date03"]==0 %}
+                  <font color="#dc3545">*必須項目です．</font>
+                  {% endif %} 
+                  <input type="date" name="item_delivery_candidate_date03" max="9999-12-31" class="form-control textarea" id="item_delivery_candidate_date03">
+                </div>
+              </div>
+
+              <div class="col-md-10">
+                <div class="form-group">
+                  貸出物の写真【アップロード】
+                  {% if message["essential_list_FLAG"]["file"]==0 %}
+                  <font color="#dc3545">*必須項目です．</font>
+                  {% endif %} 
+                  <input type=file name = file>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="update ml-auto mr-auto">
+                <button type="submit" class="btn btn-primary btn-round" value = Upload>投稿</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>
+
+{% endblock %}
+
