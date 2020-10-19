@@ -17,16 +17,16 @@ from werkzeug.utils import secure_filename
 import cloudinary
 import cloudinary.uploader
 cloudinary.config(
-  cloud_name = "aichi-prefectural-university",
-  api_key = "884251713832499",
-  api_secret = "gVicsVp9HqJhu_Yxf7xxKDGjVTQ"
+  cloud_name = "di7bvscpv",
+  api_key = "791991971347835",
+  api_secret = "qm_4bI5ttWItAwD4IzQsOTQxLNg"
 )
 
 from pprint import pprint
 
 import blueprint_login	# Add Blueprint for login page by kzh
 
-UPLOAD_FOLDER = './uploads'
+UPLOAD_FOLDER = './static/uploads'
 # アップロードされる拡張子の制限
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'gif', 'jpeg'])
 
@@ -42,7 +42,7 @@ print("##############################################")
 message = {}
 message['page_title_key'] = 'item-list'
 message['target_item_key'] = ''
-
+message["img_path"] = '/static/assets/images/wall_sample1.jpg'
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 #
 # 必須項目のリスト
@@ -118,7 +118,7 @@ def index():
   #
   result = psql.select_all()
   result_dict = psql.result_list2dict(result)
-  pprint(result_dict)
+  # pprint(result_dict)
   message['firebase_get'] = result_dict
   print("##############################################")
 
@@ -148,7 +148,7 @@ def route_post():
   #
   result = psql.select_all()
   result_dict = psql.result_list2dict(result)
-  pprint(result_dict)
+  # pprint(result_dict)
   message['firebase_get'] = result_dict
   print("##############################################")
 
@@ -179,7 +179,7 @@ def item_search():
 
   message['page_title'] = 'item-list'
 
-  return render_template('index.html', message=message)
+  return render_template('index2.html', message=message)
 
 
 # @app.route('/Itemlist', methods=['GET'])
@@ -452,8 +452,8 @@ def IconsPage():
 # |
 # │                              @author masaki tani 2020.05.24
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
-@app.route("/login_manager", methods=["POST"])  #追加
-def login_manager():
+@app.route("/wall_image_upload", methods=["POST"])  #追加
+def wall_image_upload():
   # ===================================================
   # page init
   message['page_title'] = 'Exhibition'
@@ -474,16 +474,6 @@ def login_manager():
   print("> request.file >>>>>>>>>>>>>")
   pprint(request.files['file'])
 
-  # ===================================================
-  # 必須項目の確認
-  print("##############################################")
-  print("# 必須項目の確認")
-  essential_list_FLAG = Exhibit.checker(request, essential_list)
-  message["essential_list_FLAG"] = essential_list_FLAG
-
-  pprint(message)
-  print("##############################################")
-  # ===================================================
   # item image loading
   if 'file' not in request.files:
     print('ファイルがありません')
@@ -503,50 +493,33 @@ def login_manager():
     filename = secure_filename(file.filename)
     # ファイルの保存
     img_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    print(img_path)
+    img_path = img_path.replace('./', '').replace('\\', '/')
+    print(img_path)
     file.save(img_path)
+    message["img_path"] = img_path
     # アップロード後のページに転送
 
     # cloudinary regist
     #res = cloudinary.uploader.upload(file=img_path, public_id=filename)
-    res = cloudinary.uploader.upload(file=img_path)
-    print("##############################################")
-    print("# cloudinary regist info")
-    pprint(res)
-    print("##############################################")
-    message['item_img_url'] = res['secure_url']
-    message['public_id'] = res['public_id']
+    # res = cloudinary.uploader.upload(file=img_path)
+    # print("##############################################")
+    # print("# cloudinary regist info")
+    # pprint(res)
+    # print("##############################################")
+    # message['item_img_url'] = res['secure_url']
+    # message['public_id'] = res['public_id']
 
-    # ===================================================
-    # item databse writing
-    item_dict = {}
-    item_dict['user_name'] = request.form['user_name']
-    item_dict['item_name'] = request.form['item_name']
-    item_dict['item_usage'] = request.form['item_usage']
-    item_dict['item_img_url'] = res['secure_url']
+    # # 主キーを登録
+    # item_dict['public_id'] = res['public_id']
 
-    item_dict['item_delivery_candidate_date01'] = request.form['item_delivery_candidate_date01']
-    item_dict['item_delivery_candidate_date02'] = request.form['item_delivery_candidate_date02']
-    item_dict['item_delivery_candidate_date03'] = request.form['item_delivery_candidate_date03']
-    item_dict['item_period1'] = request.form['item_period1']
-    item_dict['item_period2'] = request.form['item_period2']
-    item_dict['item_price'] = request.form['item_price']
-    item_dict['regist_day'] = request.form['regist_day']
-
-    item_dict['delivery_city'] = request.form['delivery_city']
-    item_dict['rent_type'] = request.form['rent_type']
-    item_dict['category1'] = request.form['category1']
-    item_dict['category2'] = request.form['category2']
-
-    # 主キーを登録
-    item_dict['public_id'] = res['public_id']
-
-    ##############################################
-    # postgres databaseへ登録
-    #
-    inset_dict = {}
-    inset_dict['items'] = {}
-    inset_dict['items'][0] = item_dict
-    psql.json_insert(inset_dict)
+    # ##############################################
+    # # postgres databaseへ登録
+    # #
+    # inset_dict = {}
+    # inset_dict['items'] = {}
+    # inset_dict['items'][0] = item_dict
+    # psql.json_insert(inset_dict)
 
   # ++++++++++++++++++++++++++++++++++++++
   # ポップアップがでるようにしたい
@@ -554,7 +527,7 @@ def login_manager():
   # ++++++++++++++++++++++++++++++++++++++
 
 
-  return render_template('Exhibition.html', message=message)
+  return render_template('route_post.html', message=message)
 
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 # │
@@ -570,7 +543,7 @@ def allwed_file(filename):
 
 if __name__ == '__main__':
 
-  app.run(host='0.0.0.0', port=5001, debug=True)
+  app.run(host='192.168.11.55', port=5001, debug=True)
 
   ##############################################
   # +++++++++++++++++++++++++++++++++++++++++++

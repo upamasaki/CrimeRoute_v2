@@ -7,7 +7,7 @@
 <div class="app-main__outer">
   <div class="app-main__inner">
     <div class="app-page-title">
-      <div class="page-title-wrapper">
+      <div class="page-title-wrapper" id="wall_img">
         <div class="page-title-heading">
           <div class="page-title-icon">
             <i class="pe-7s-car icon-gradient bg-mean-fruit">
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-6 col-xl-4">
         <div class="card mb-3 widget-content bg-midnight-bloom">
           <div class="widget-content-wrapper text-white">
@@ -73,30 +73,73 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+
+
     <div class="row">
+      
+      <div class="col-md-12 col-lg-6">
         <div class="mb-3 card">
           <div class="card-header-tab card-header-tab-animation card-header">
-            <div class="card-header-title">
-              <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
-              Sales Report
-            </div>
+            <form action="/wall_image_upload" method="POST" enctype = multipart/form-data>
+              <div class="card-header-title">
+                  <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
+                  Wall image：<input type=file name = file><button class="mt-1 btn btn-primary">アップロード</button>
 
+              </div>
+            </form>
           </div>
-          <div class="card-body">
-            <div class="card">
+          <div class="card-body" id="wall_img2">
+              <div class="tab-content">
+                  <div class="tab-pane fade show active" id="tabs-eg-77">
+                      <div class="card mb-3 widget-chart widget-chart2 text-left w-100">
+                          <div class="widget-chat-wrapper-outer">
+                              <div class="widget-chart-wrapper widget-chart-wrapper-lg opacity-10 m-0">
+                                  <canvas id="canvas2"></canvas>
+                              </div>
+                          </div>
+                      </div>
+                      <h6 class="text-muted text-uppercase font-size-md opacity-5 font-weight-normal">Top Authors</h6>
 
-              <h1>Wall image</h1>
-              <canvas id="wall"  height="1000" width="1247"></canvas>
-
-            </div>
-            <h6 class="text-muted text-uppercase font-size-md opacity-5 font-weight-normal">Top Authors</h6>
-
+                  </div>
+              </div>
           </div>
         </div>
+      </div>
+      <div class="col-md-12 col-lg-6">
+        <div class="row">
+          <div class="col-sm-2 col-md-3 col-lg-12 ">
+            <button class="mb-2 mr-2 btn btn-warning btn-lg btn-block" id="start_btn" type="button">Start</button>
+          </div>
+          <div class="col-sm-2 col-md-3 col-lg-12 ">
+            <button class="mb-2 mr-2 btn btn-primary btn-lg btn-block" id="route_btn" type="button">Route</button>
+        </div>
+          <div class="col-sm-2 col-md-3 col-lg-12 ">
+            <button class="mb-2 mr-2 btn btn-danger btn-lg btn-block" id="goal_btn" type="button">Goal</button>
+          </div>
+          <div class="col-sm-2 col-md-3 col-lg-12 ">
+            <button class="mb-2 mr-2 btn btn-success btn-lg btn-block" id="show_btn" type="button">Show</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
 </div>
+
+<script type="text/javascript">
+  var message = {{ message | tojson }};
+  console.log("message : " + message["img_path"]);
+  var img_path =  message["img_path"];
+
+  draw_canvas(img_path);
+
+  window.onload = function()
+  {
+    
+    draw_canvas(img_path);
+
+
+  }
+</script>
 
 {% endblock %}
